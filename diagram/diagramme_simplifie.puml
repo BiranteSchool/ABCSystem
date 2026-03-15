@@ -1,0 +1,164 @@
+@startuml
+
+title Module de Transformation \n Système ABC vers Système DDD\n8INF334 - Hiver 2026
+
+top to bottom direction
+
+skinparam packageStyle rectangle
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+package "utils" {
+    class Logger <<Singleton>> {
+    }
+}
+
+package "abc" {
+    class SystemeABC {
+        + SystemeABC()
+        + genererRapport(idProduit : int) : String
+    }
+}
+
+package "transformation" {
+    interface ArticleExterneInterface {
+        + getNom() : String
+        + getPrix() : double
+        + getType() : String
+        + getDetails() : String
+    }
+
+    class JSONParser {
+        + parse(json : String) : Map<String, String>
+    }
+
+    together {
+        class AdaptateurSuperColle {
+        - nom : String
+        - volumeMl : int
+        - tempsSechageSec : int
+        - resistantEau : boolean
+        - prix : double
+        + AdaptateurSuperColle(jsonData : String)
+        + getNom() : String
+        + getPrix() : double
+        + getType() : String
+        + getDetails() : String
+        + setNom(nom : String) : void
+        + getVolumeMl() : int
+        + setVolumeMl(volumeMl : int) : void
+        + getTempsSechageSec() : int
+        + setTempsSechageSec(tempsSechageSec : int) : void
+        + isResistantEau() : boolean
+        + setResistantEau(resistantEau : boolean) : void
+        + setPrix(prix : double) : void
+    }
+
+    class AdaptateurCouteauPrecision {
+        - nom : String
+        - longueurLameCm : double
+        - lameRemplacable : boolean
+        - materiau : String
+        - prix : double
+        + AdaptateurCouteauPrecision(jsonData : String)
+        + getNom() : String
+        + getPrix() : double
+        + getType() : String
+        + getDetails() : String
+        + setNom(nom : String) : void
+        + getLongueurLameCm() : double
+        + setLongueurLameCm(longueurLameCm : double) : void
+        + isLameRemplacable() : boolean
+        + setLameRemplacable(lameRemplacable : boolean) : void
+        + getMateriau() : String
+        + setMateriau(materiau : String) : void
+        + setPrix(prix : double) : void
+    }
+
+    class AdaptateurTabletteHumide {
+        - nom : String
+        - taille : String
+        - feuillesSupplementaires : int
+        - material : String
+        - prix : double
+        + AdaptateurTabletteHumide(jsonData : String)
+        + getNom() : String
+        + getPrix() : double
+        + getType() : String
+        + getDetails() : String
+        + setNom(nom : String) : void
+        + getTaille() : String
+        + setTaille(taille : String) : void
+        + getFeuillesSupplementaires() : int
+        + setFeuillesSupplementaires(feuillesSupplementaires : int) : void
+        + getMaterial() : String
+        + setMaterial(material : String) : void
+        + setPrix(prix : double) : void
+    }
+    }
+}
+
+package "ddd" {
+    class SystemeDDD {
+        - catalogue : List<EnsembleBricolageABC>
+        + SystemeDDD()
+        + importExtArt(article : ArticleExterneInterface) : void
+        + getCatalogue() : List<EnsembleBricolageABC>
+        + setCatalogue(catalogue : List<EnsembleBricolageABC>) : void
+    }
+
+    abstract class EnsembleBricolageABC {
+        - nom : String
+        - prix : double
+        - type : String
+        - details : String
+        + EnsembleBricolageABC()
+        + EnsembleBricolageABC(nom : String, prix : double, type : String, details : String)
+        + getNom() : String
+        + setNom(nom : String) : void
+        + getPrix() : double
+        + setPrix(prix : double) : void
+        + getType() : String
+        + setType(type : String) : void
+        + getDetails() : String
+        + setDetails(details : String) : void
+    }
+
+    together {
+        class SuperColle {
+            + SuperColle()
+            + SuperColle(nom : String, prix : double, type : String, details : String)
+        }
+
+        class CouteauPrecision {
+            + CouteauPrecision()
+            + CouteauPrecision(nom : String, prix : double, type : String, details : String)
+        }
+
+        class TabletteHumide {
+            + TabletteHumide()
+            + TabletteHumide(nom : String, prix : double, type : String, details : String)
+        }
+    }
+}
+
+ArticleExterneInterface <|.. AdaptateurSuperColle
+ArticleExterneInterface <|.. AdaptateurCouteauPrecision
+ArticleExterneInterface <|.. AdaptateurTabletteHumide
+
+AdaptateurSuperColle ..> JSONParser
+AdaptateurCouteauPrecision ..> JSONParser
+AdaptateurTabletteHumide ..> JSONParser
+
+EnsembleBricolageABC <|-- SuperColle
+EnsembleBricolageABC <|-- CouteauPrecision
+EnsembleBricolageABC <|-- TabletteHumide
+
+SystemeDDD "1" *-- "0..*" EnsembleBricolageABC
+SystemeDDD --> ArticleExterneInterface
+
+SystemeABC ..> Logger
+SystemeDDD ..> Logger
+JSONParser ..> Logger
+
+@enduml
