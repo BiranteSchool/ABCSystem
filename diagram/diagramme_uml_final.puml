@@ -1,9 +1,12 @@
-@startuml Module de Transformation - Pattern Adapter
+@startuml
 
-title Module de Transformation ETL\nPattern Adapter - Système ABC vers Système DDD\n8INF334 - Hiver 2026
+title Module de Transformation \n Système ABC vers Système DDD\n8INF334 - Hiver 2026
+
+top to bottom direction
 
 skinparam packageStyle rectangle
 skinparam classAttributeIconSize 0
+skinparam linetype ortho
 
 package "utils" {
     class Logger <<Singleton>> {
@@ -51,80 +54,107 @@ package "transformation" {
         + setLogger(logger : Logger) : void
     }
 
-    class AdaptateurSuperColle {
-        - nom : String
-        - volumeMl : int
-        - tempsSechageSec : int
-        - resistantEau : boolean
-        - prix : double
-        - logger : Logger
-        + AdaptateurSuperColle(jsonData : String)
-        + getNom() : String
-        + getPrix() : double
-        + getType() : String
-        + getDetails() : String
-        + setNom(nom : String) : void
-        + getVolumeMl() : int
-        + setVolumeMl(volumeMl : int) : void
-        + getTempsSechageSec() : int
-        + setTempsSechageSec(tempsSechageSec : int) : void
-        + isResistantEau() : boolean
-        + setResistantEau(resistantEau : boolean) : void
-        + setPrix(prix : double) : void
-        + getLogger() : Logger
-        + setLogger(logger : Logger) : void
-    }
+    together {
+        class AdaptateurSuperColle {
+            - nom : String
+            - volumeMl : int
+            - tempsSechageSec : int
+            - resistantEau : boolean
+            - prix : double
+            - logger : Logger
+            + AdaptateurSuperColle(jsonData : String)
+            + getNom() : String
+            + getPrix() : double
+            + getType() : String
+            + getDetails() : String
+            + setNom(nom : String) : void
+            + getVolumeMl() : int
+            + setVolumeMl(volumeMl : int) : void
+            + getTempsSechageSec() : int
+            + setTempsSechageSec(tempsSechageSec : int) : void
+            + isResistantEau() : boolean
+            + setResistantEau(resistantEau : boolean) : void
+            + setPrix(prix : double) : void
+            + getLogger() : Logger
+            + setLogger(logger : Logger) : void
+        }
 
-    class AdaptateurCouteauPrecision {
-        - nom : String
-        - longueurLameCm : double
-        - lameRemplacable : boolean
-        - materiau : String
-        - prix : double
-        - logger : Logger
-        + AdaptateurCouteauPrecision(jsonData : String)
-        + getNom() : String
-        + getPrix() : double
-        + getType() : String
-        + getDetails() : String
-        + setNom(nom : String) : void
-        + getLongueurLameCm() : double
-        + setLongueurLameCm(longueurLameCm : double) : void
-        + isLameRemplacable() : boolean
-        + setLameRemplacable(lameRemplacable : boolean) : void
-        + getMateriau() : String
-        + setMateriau(materiau : String) : void
-        + setPrix(prix : double) : void
-        + getLogger() : Logger
-        + setLogger(logger : Logger) : void
-    }
+        class AdaptateurCouteauPrecision {
+            - nom : String
+            - longueurLameCm : double
+            - lameRemplacable : boolean
+            - materiau : String
+            - prix : double
+            - logger : Logger
+            + AdaptateurCouteauPrecision(jsonData : String)
+            + getNom() : String
+            + getPrix() : double
+            + getType() : String
+            + getDetails() : String
+            + setNom(nom : String) : void
+            + getLongueurLameCm() : double
+            + setLongueurLameCm(longueurLameCm : double) : void
+            + isLameRemplacable() : boolean
+            + setLameRemplacable(lameRemplacable : boolean) : void
+            + getMateriau() : String
+            + setMateriau(materiau : String) : void
+            + setPrix(prix : double) : void
+            + getLogger() : Logger
+            + setLogger(logger : Logger) : void
+        }
 
-    class AdaptateurTabletteHumide {
-        - nom : String
-        - taille : String
-        - feuillesSupplementaires : int
-        - material : String
-        - prix : double
-        - logger : Logger
-        + AdaptateurTabletteHumide(jsonData : String)
-        + getNom() : String
-        + getPrix() : double
-        + getType() : String
-        + getDetails() : String
-        + setNom(nom : String) : void
-        + getTaille() : String
-        + setTaille(taille : String) : void
-        + getFeuillesSupplementaires() : int
-        + setFeuillesSupplementaires(feuillesSupplementaires : int) : void
-        + getMaterial() : String
-        + setMaterial(material : String) : void
-        + setPrix(prix : double) : void
-        + getLogger() : Logger
-        + setLogger(logger : Logger) : void
+        class AdaptateurTabletteHumide {
+            - nom : String
+            - taille : String
+            - feuillesSupplementaires : int
+            - material : String
+            - prix : double
+            - logger : Logger
+            + AdaptateurTabletteHumide(jsonData : String)
+            + getNom() : String
+            + getPrix() : double
+            + getType() : String
+            + getDetails() : String
+            + setNom(nom : String) : void
+            + getTaille() : String
+            + setTaille(taille : String) : void
+            + getFeuillesSupplementaires() : int
+            + setFeuillesSupplementaires(feuillesSupplementaires : int) : void
+            + getMaterial() : String
+            + setMaterial(material : String) : void
+            + setPrix(prix : double) : void
+            + getLogger() : Logger
+            + setLogger(logger : Logger) : void
+        }
+
+        class AdaptateurGenerique {
+            - nom : String
+            - prix : double
+            - type : String
+            - details : String
+            - logger : Logger
+            + AdaptateurGenerique(jsonData : String, type : String, cleDetails : List<String>)
+            + getNom() : String
+            + getPrix() : double
+            + getType() : String
+            + getDetails() : String
+        }
     }
 }
 
 package "ddd" {
+    class SystemeDDD {
+        - catalogue : List<EnsembleBricolageABC>
+        - logger : Logger
+        + SystemeDDD()
+        + importExtArt(article : ArticleExterneInterface) : void
+        + afficherCatalogue() : void
+        + getCatalogue() : List<EnsembleBricolageABC>
+        + setCatalogue(catalogue : List<EnsembleBricolageABC>) : void
+        + getLogger() : Logger
+        + setLogger(logger : Logger) : void
+    }
+
     abstract class EnsembleBricolageABC {
         - nom : String
         - prix : double
@@ -143,34 +173,30 @@ package "ddd" {
         + setDetails(details : String) : void
     }
 
-    class SuperColle {
-        + SuperColle()
-        + SuperColle(nom : String, prix : double, type : String, details : String)
-        + afficherInformations() : void
-    }
+    together {
+        class SuperColle {
+            + SuperColle()
+            + SuperColle(nom : String, prix : double, type : String, details : String)
+            + afficherInformations() : void
+        }
 
-    class CouteauPrecision {
-        + CouteauPrecision()
-        + CouteauPrecision(nom : String, prix : double, type : String, details : String)
-        + afficherInformations() : void
-    }
+        class CouteauPrecision {
+            + CouteauPrecision()
+            + CouteauPrecision(nom : String, prix : double, type : String, details : String)
+            + afficherInformations() : void
+        }
 
-    class TabletteHumide {
-        + TabletteHumide()
-        + TabletteHumide(nom : String, prix : double, type : String, details : String)
-        + afficherInformations() : void
-    }
+        class TabletteHumide {
+            + TabletteHumide()
+            + TabletteHumide(nom : String, prix : double, type : String, details : String)
+            + afficherInformations() : void
+        }
 
-    class SystemeDDD {
-        - catalogue : List<EnsembleBricolageABC>
-        - logger : Logger
-        + SystemeDDD()
-        + importExtArt(article : ArticleExterneInterface) : void
-        + afficherCatalogue() : void
-        + getCatalogue() : List<EnsembleBricolageABC>
-        + setCatalogue(catalogue : List<EnsembleBricolageABC>) : void
-        + getLogger() : Logger
-        + setLogger(logger : Logger) : void
+        class ProduitGeneriqueDDD {
+            + ProduitGeneriqueDDD()
+            + ProduitGeneriqueDDD(nom : String, prix : double, type : String, details : String)
+            + afficherInformations() : void
+        }
     }
 }
 
@@ -178,89 +204,54 @@ class Main {
     + {static} main(args : String[]) : void
 }
 
-' Pattern Adapter - Réalisation de l'interface
-ArticleExterneInterface <|.. AdaptateurSuperColle : <<implements>>
-ArticleExterneInterface <|.. AdaptateurCouteauPrecision : <<implements>>
-ArticleExterneInterface <|.. AdaptateurTabletteHumide : <<implements>>
+class "produits.properties" <<fichier configuration>> {
+    produit.N.cle_nom
+    produit.N.cle_prix
+    produit.N.type
+    produit.N.details
+}
 
-' Dépendances - Utilisation du parser
-AdaptateurSuperColle ..> JSONParser : <<use>>
-AdaptateurCouteauPrecision ..> JSONParser : <<use>>
-AdaptateurTabletteHumide ..> JSONParser : <<use>>
+' Implémentation interface
+ArticleExterneInterface <|.. AdaptateurSuperColle
+ArticleExterneInterface <|.. AdaptateurCouteauPrecision
+ArticleExterneInterface <|.. AdaptateurTabletteHumide
+ArticleExterneInterface <|.. AdaptateurGenerique
 
-' Héritage - Produits DDD
-EnsembleBricolageABC <|-- SuperColle : <<extends>>
-EnsembleBricolageABC <|-- CouteauPrecision : <<extends>>
-EnsembleBricolageABC <|-- TabletteHumide : <<extends>>
+' Utilisation JSONParser
+AdaptateurSuperColle ..> JSONParser
+AdaptateurCouteauPrecision ..> JSONParser
+AdaptateurTabletteHumide ..> JSONParser
+AdaptateurGenerique ..> JSONParser
 
-' Association - SystemeDDD utilise l'interface
-SystemeDDD --> ArticleExterneInterface : <<use>>
+' Héritage produits DDD
+EnsembleBricolageABC <|-- SuperColle
+EnsembleBricolageABC <|-- CouteauPrecision
+EnsembleBricolageABC <|-- TabletteHumide
+EnsembleBricolageABC <|-- ProduitGeneriqueDDD
 
-' Composition - Catalogue de produits
-SystemeDDD "1" *-- "0..*" EnsembleBricolageABC : catalogue
+' Composition catalogue
+SystemeDDD "1" *-- "0..*" EnsembleBricolageABC
+SystemeDDD --> ArticleExterneInterface
 
-' Dépendances - Logger Singleton
-SystemeABC ..> Logger : <<use>>
-SystemeDDD ..> Logger : <<use>>
-JSONParser ..> Logger : <<use>>
-AdaptateurSuperColle ..> Logger : <<use>>
-AdaptateurCouteauPrecision ..> Logger : <<use>>
-AdaptateurTabletteHumide ..> Logger : <<use>>
+' Logger
+SystemeABC ..> Logger
+SystemeDDD ..> Logger
+JSONParser ..> Logger
+AdaptateurSuperColle ..> Logger
+AdaptateurCouteauPrecision ..> Logger
+AdaptateurTabletteHumide ..> Logger
+AdaptateurGenerique ..> Logger
 
-' Flux ETL dans Main
-Main ..> SystemeABC : <<use>>
-Main ..> SystemeDDD : <<use>>
-Main ..> AdaptateurSuperColle : <<create>>
-Main ..> AdaptateurCouteauPrecision : <<create>>
-Main ..> AdaptateurTabletteHumide : <<create>>
-Main ..> Logger : <<use>>
+' Main
+Main ..> SystemeABC
+Main ..> SystemeDDD
+Main ..> AdaptateurSuperColle
+Main ..> AdaptateurCouteauPrecision
+Main ..> AdaptateurTabletteHumide
+Main ..> AdaptateurGenerique
+Main ..> "produits.properties"
 
-note right of ArticleExterneInterface
-  Interface définie par le système DDD
-  pour accepter les articles externes.
-  Les adaptateurs implémentent cette interface
-  (Pattern Adapter).
-end note
-
-note left of Logger
-  Pattern Singleton
-  Journalise toutes les opérations,
-  traitements et exceptions.
-  Utilise System.out.println()
-  pour l'itération #1.
-end note
-
-note bottom of SystemeABC
-  Mock du système source ABC.
-  Méthode: genererRapport(int): String
-  Retourne des chaînes JSON pour
-  les 3 produits mockés.
-end note
-
-note bottom of SystemeDDD
-  Système cible DDD.
-  Méthode: importExtArt(ArticleExterneInterface): void
-  Importe les articles via l'interface.
-end note
-
-note top of JSONParser
-  Parser JSON MANUEL
-  (SANS API externe)
-  Utilise java.util.regex
-  pour extraire les paires clé-valeur.
-end note
-
-note right of EnsembleBricolageABC
-  Classe abstraite représentant
-  le terme générique
-  "Ensemble de bricolage ABC"
-  défini par l'entreprise DDD.
-end note
-
-note bottom of SuperColle
-  Produit concret DDD: Super colle
-  Héritage direct de EnsembleBricolageABC
-  (pas de catégories intermédiaires)
-end note
+' Configuration
+AdaptateurGenerique ..> "produits.properties"
 
 @enduml
