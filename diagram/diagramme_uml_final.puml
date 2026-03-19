@@ -251,7 +251,5 @@ Main ..> AdaptateurTabletteHumide
 Main ..> AdaptateurGenerique
 Main ..> "produits.properties"
 
-' Configuration
-AdaptateurGenerique ..> "produits.properties"
 
 @enduml
