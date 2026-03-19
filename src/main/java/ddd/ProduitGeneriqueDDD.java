@@ -11,6 +11,7 @@ public class ProduitGeneriqueDDD extends EnsembleBricolageABC {
     @Override
     public void afficherInformations() {
         System.out.println("=== " + getNom().toUpperCase() + " ===");
+        System.out.println("Nom: " + getNom());
         System.out.println("Prix: " + getPrix() + " $");
         System.out.println("Type: " + getType());
         System.out.println("Détails: " + getDetails());
