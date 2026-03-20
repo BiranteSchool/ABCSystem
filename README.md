@@ -69,7 +69,7 @@ src/main/java/
     └── SystemeDDD.java                (Système cible)
 ```
 
-**Total**: 13 classes Java
+**Total**: 13 classes Java (itération1)
 
 ---
 
@@ -143,19 +143,8 @@ Les objets sont transformés en instances de:
 - Java JDK 8 ou supérieur
 - Terminal / Ligne de commande
 
-### Méthode 1: Scripts Automatiques
 
-**Compilation**:
-```bash
-./compile.sh
-```
-
-**Exécution**:
-```bash
-./run.sh
-```
-
-### Méthode 2: Commandes Manuelles
+### Méthode: Commandes Manuelles
 
 **Compilation** (depuis la racine du projet):
 ```bash
