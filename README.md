@@ -69,7 +69,7 @@ src/main/java/
     └── SystemeDDD.java                (Système cible)
 ```
 
-**Total**: 13 classes Java
+**Total**: 13 classes Java (itération1)
 
 ---
 
@@ -143,19 +143,8 @@ Les objets sont transformés en instances de:
 - Java JDK 8 ou supérieur
 - Terminal / Ligne de commande
 
-### Méthode 1: Scripts Automatiques
 
-**Compilation**:
-```bash
-./compile.sh
-```
-
-**Exécution**:
-```bash
-./run.sh
-```
-
-### Méthode 2: Commandes Manuelles
+### Méthode: Commandes Manuelles
 
 **Compilation** (depuis la racine du projet):
 ```bash
@@ -188,71 +177,11 @@ Lors de l'exécution, vous observerez:
 ```
 [2026-02-22 HH:mm:ss] [NIVEAU] Message
 ```
-
----
-
-## Contraintes Respectées
-
-- ✅ **Langage**: Java pur (100%)
-- ✅ **Pas d'API externe**: Parser JSON manuel avec `java.util.regex`
-- ✅ **Journalisation obligatoire**: Logger Singleton utilisé partout
-- ✅ **Console pour affichage**: `System.out.println()` (itération #1)
-- ✅ **Pattern Adapter**: 3 adaptateurs implémentent `ArticleExterneInterface`
-- ✅ **Pattern Singleton**: `Logger.getInstance()`
-- ✅ **Classe abstraite**: `EnsembleBricolageABC` (terme générique)
-- ✅ **Héritage**: SuperColle, CouteauPrecision, TabletteHumide extends EnsembleBricolageABC
-- ✅ **Méthodes exactes**:
-  - `genererRapport(int idProduit): String` (ABC)
-  - `importExtArt(ArticleExterneInterface article): void` (DDD)
-- ✅ **Données mockées**: Exactement conformes aux spécifications
-- ✅ **Documentation UML**: Diagramme PlantUML complet (`diagramme_uml_final.puml`)
-
 ---
 
 ## Diagramme UML
 
 Le diagramme de classe complet est disponible dans le fichier `diagramme_uml_final.puml`.
 
-**Contenu du diagramme**:
-- Tous les attributs (types et visibilité: - private, + public)
-- Tous les constructeurs (défaut + avec paramètres)
-- Tous les getters et setters
-- Toutes les méthodes avec types de retour et paramètres
-- Toutes les relations:
-  - Réalisation (implements): Adaptateurs → ArticleExterneInterface
-  - Héritage (extends): SuperColle/CouteauPrecision/TabletteHumide → EnsembleBricolageABC
-  - Association: SystemeDDD → ArticleExterneInterface
-  - Composition: SystemeDDD ◆→ EnsembleBricolageABC (catalogue)
-  - Dépendance (use): Adaptateurs → JSONParser, Toutes classes → Logger
 
-**Visualisation**:
-- En ligne: http://www.plantuml.com/plantuml/uml/ (copier-coller le contenu)
-- Local: `plantuml diagramme_uml_final.puml` (si PlantUML installé)
 
----
-
-## Points Forts de l'Implémentation
-
-1. **Simplicité**: Architecture claire sans over-engineering
-2. **Conformité stricte**: Respect à 100% du cahier des charges
-3. **Parser manuel robuste**: Expressions régulières efficaces
-4. **Journalisation complète**: Toutes les opérations tracées
-5. **Gestion d'erreurs**: Try-catch avec logs d'exceptions
-6. **Code maintenable**: Noms explicites, commentaires JavaDoc
-7. **Extensible**: Architecture prête pour les itérations futures
-
----
-
-## Auteur
-
-Projet réalisé dans le cadre du cours **8INF334 - Modélisation et conception objet**
-Université du Québec à Chicoutimi (UQAC)
-Hiver 2026
-
----
-
-## Références
-
-- Pattern Adapter: _Design Patterns: Elements of Reusable Object-Oriented Software_ (Gang of Four)
-- Pattern Singleton: _Effective Java_ (Joshua Bloch)
-- Spécifications du projet: `module_transformation_SEL.pdf`

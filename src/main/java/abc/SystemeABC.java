@@ -33,6 +33,9 @@ public class SystemeABC {
             case 3:
                 rapport = "{\"nom\": \"Tablette humide\", \"taille\": \"Standard\", \"feuilles_supplémentaires\": 20, \"material\": \"plastique\", \"prix\": 40.00}";
                 break;
+            case 4:
+                rapport = "{\"nom\": \"Nouveau produit\", \"attribut1\": \"valeur1\", \"attribut2\": \"valeur2\", \"attribut3\": \"valeur3\", \"prix\": 9.99}";
+                break;
             default:
                 logger.error("Produit inexistant avec ID: " + idProduit);
                 throw new IllegalArgumentException("ID de produit invalide: " + idProduit);

@@ -51,8 +51,14 @@ public class SystemeDDD {
                     article.getDetails()
                 );
             } else {
-                logger.warning("Produit non reconnu: " + nom);
-                throw new IllegalArgumentException("Produit non supporté: " + nom);
+                // Cas général : produit non spécifique → ProduitGeneriqueDDD
+                produit = new ProduitGeneriqueDDD(
+                    article.getNom(),
+                    article.getPrix(),
+                    article.getType(),
+                    article.getDetails()
+                );
+                logger.info("Produit générique créé pour: " + nom);
             }
 
             catalogue.add(produit);

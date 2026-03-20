@@ -38,7 +38,6 @@ public class JSONParser {
                 String key = matcher.group(1);
                 String value = matcher.group(3) != null ? matcher.group(3) : matcher.group(4).trim();
                 result.put(key, value);
-                logger.info("Clé extraite: " + key + " = " + value);
             }
 
             logger.info("Parsing JSON terminé avec succès - " + result.size() + " éléments extraits");
